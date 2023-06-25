@@ -16,7 +16,7 @@ export default function Navigation() {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Resturant" component={ResturantScreen} />
+        <Stack.Screen name="Restaurant" component={ResturantScreen} />
         <Stack.Screen
           name="Cart"
           options={{ presentation: "modal", headerShown: false }}

@@ -4,9 +4,15 @@ import React from "react";
 import * as Icon from "react-native-feather";
 import { themeColors } from "../theme";
 
+import { useNavigation } from "@react-navigation/native";
+
 const RestaurantCard = ({ item }) => {
+  const navigation = useNavigation();
+
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback
+      onPress={() => navigation.navigate("Restaurant", { ...item })}
+    >
       <View
         style={{
           shadowColor: themeColors.bgColor(1),
