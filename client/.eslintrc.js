@@ -30,8 +30,9 @@ module.exports = {
     // allow jsx syntax in js files (for next.js project)
     "react/jsx-filename-extension": [1, { extensions: [".js", ".jsx"] }], //should add ".ts" if typescript project
     "react-native/split-platform-components": 2,
-    "react-native/no-inline-styles": 2,
+    // "react-native/no-inline-styles": 2,
     "react-native/no-color-literals": 2,
-    "react-native/no-raw-text": 2,
+    // "react-native/no-raw-text": 2,
+    "react/prop-types": [0],
   },
 };
