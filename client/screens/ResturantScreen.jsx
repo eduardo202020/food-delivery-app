@@ -1,5 +1,6 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React from "react";
+
+import { StatusBar } from "expo-status-bar";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 
@@ -15,6 +16,7 @@ const ResturantScreen = () => {
 
   return (
     <View>
+      <StatusBar style="light" />
       <CartIcon />
       <ScrollView>
         <View className="relative">
