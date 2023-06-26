@@ -1,4 +1,8 @@
 import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
+import { useEffect } from "react";
+
+import { useDispatch } from "react-redux";
+import { setResturant } from "../slices/resturantSlice";
 
 import { StatusBar } from "expo-status-bar";
 
@@ -13,6 +17,14 @@ import CartIcon from "../components/CartIcon";
 const ResturantScreen = () => {
   const { params: item } = useRoute();
   const navigation = useNavigation();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (item && item.id) {
+      dispatch(setResturant({ ...item }));
+    }
+  }, [dispatch, item]);
 
   return (
     <View>

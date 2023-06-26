@@ -4,8 +4,28 @@ import React from "react";
 import * as Icon from "react-native-feather";
 
 import { themeColors } from "../theme";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addToBasket,
+  removeFromBasket,
+  selectBasketItemsById,
+} from "../slices/basketSlice";
 
 const DishRow = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const totalItems = useSelector((state) =>
+    selectBasketItemsById(state, item.id)
+  );
+
+  const handleIncrease = () => {
+    dispatch(addToBasket({ ...item }));
+  };
+
+  const handleDecrease = () => {
+    dispatch(removeFromBasket({ id: item.id }));
+  };
+
   return (
     <View
       className="flex-row items-center bg-white p-3 rounded-3xl shadow-2xl mb-3 mx-2"
@@ -21,6 +41,8 @@ const DishRow = ({ item }) => {
           <Text className="text-gray-700 text-lg font-bold">${item.price}</Text>
           <View className="flex-row items-center">
             <TouchableOpacity
+              disabled={!totalItems.length}
+              onPress={handleDecrease}
               className="p-1 rounded-full "
               style={{ backgroundColor: themeColors.bgColor(1) }}
             >
@@ -31,8 +53,9 @@ const DishRow = ({ item }) => {
                 stroke="white"
               />
             </TouchableOpacity>
-            <Text className="px-3">{2}</Text>
+            <Text className="px-3">{totalItems.length}</Text>
             <TouchableOpacity
+              onPress={handleIncrease}
               className="p-1 rounded-full "
               style={{ backgroundColor: themeColors.bgColor(1) }}
             >

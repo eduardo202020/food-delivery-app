@@ -11,7 +11,7 @@ const PreparingOrderScreen = () => {
       // move to delivery sceen
       navigation.navigate("Delivery");
     }, 3000);
-  }, []);
+  }, [navigation]);
   return (
     <View className="flex-1 bg-white justify-center items-center">
       <Image
