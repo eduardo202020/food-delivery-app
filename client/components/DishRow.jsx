@@ -10,12 +10,13 @@ import {
   removeFromBasket,
   selectBasketItemsById,
 } from "../slices/basketSlice";
+import { urlFor } from "../sanity";
 
 const DishRow = ({ item }) => {
   const dispatch = useDispatch();
 
   const totalItems = useSelector((state) =>
-    selectBasketItemsById(state, item.id)
+    selectBasketItemsById(state, item._id)
   );
 
   const handleIncrease = () => {
@@ -23,15 +24,21 @@ const DishRow = ({ item }) => {
   };
 
   const handleDecrease = () => {
-    dispatch(removeFromBasket({ id: item.id }));
+    dispatch(removeFromBasket({ id: item._id }));
   };
+
+  // console.log({ totalItems });
+  // console.log("item_id", item._id);
 
   return (
     <View
       className="flex-row items-center bg-white p-3 rounded-3xl shadow-2xl mb-3 mx-2"
       style={{ shadowColor: themeColors.bgColor(1), shadowRadius: 10 }}
     >
-      <Image source={item.image} className="rounded-3xl h-[100] w-[100]" />
+      <Image
+        source={{ uri: urlFor(item.image).url() }}
+        className="rounded-3xl h-[100] w-[100]"
+      />
       <View className="flex flex-1 space-y-3">
         <View className="pl-3">
           <Text className="text-xl">{item.name}</Text>

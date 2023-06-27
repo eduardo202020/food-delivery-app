@@ -14,7 +14,7 @@ export const basketSlice = createSlice({
     removeFromBasket: (state, action) => {
       let newBasket = [...state.items];
       let itemIndex = state.items.findIndex(
-        (item) => item.id == action.payload.id
+        (item) => item._id == action.payload.id
       );
       if (itemIndex >= 0) {
         newBasket.splice(itemIndex, 1);
@@ -37,7 +37,19 @@ export const { addToBasket, removeFromBasket, emptyBasket } =
 export const selectBasketItems = (state) => state.basket.items;
 
 export const selectBasketItemsById = (state, id) =>
-  state.basket.items.filter((item) => item.id == id);
+  state.basket.items.filter((item) => item._id == id);
+
+// const selectItems = (state) => state.basket.items;
+// export const selectBasketItemsById = createSelector(
+//   [selectBasketItems],
+//   (items, id) => items.filter((item) => item._id == id)
+// );
+
+// const selectTodos = (state) => state.todos;
+
+// const selectCompletedTodos = createSelector([selectTodos], (todos) =>
+//   todos.filter((todo) => todo.completed)
+// );
 
 export const selectBasketTotal = (state) =>
   state.basket.items.reduce((total, item) => (total = total += item.price), 0);

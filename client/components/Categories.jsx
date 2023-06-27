@@ -1,10 +1,20 @@
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import React, { useState } from "react";
 
-import { categories } from "../constants/index";
+import { useEffect } from "react";
+import { getCategories } from "../api";
+import { urlFor } from "../sanity";
 
 const Categories = () => {
   const [activeCategory, setActiveCategory] = useState(false);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories().then((data) => {
+      setCategories(data);
+    });
+  }, []);
+
   return (
     <View className="mt-4">
       <ScrollView
@@ -14,7 +24,7 @@ const Categories = () => {
         contentContainerStyle={{ paddingHorizontal: 15 }}
       >
         {categories.map((category, index) => {
-          const isActive = category.id == activeCategory;
+          const isActive = category._id == activeCategory;
           const btnClass = isActive ? " bg-gray-600" : " bg-gray-200";
           const textClass = isActive
             ? " font-semibold text-gray-800"
@@ -23,12 +33,12 @@ const Categories = () => {
           return (
             <View key={index} className="flex justify-center items-center mr-6">
               <TouchableOpacity
-                onPress={() => setActiveCategory(category.id)}
+                onPress={() => setActiveCategory(category._id)}
                 className={"p-1 rounded-full shadow bg-gray-200 " + btnClass}
               >
                 <Image
                   style={{ width: 45, height: 45 }}
-                  source={category.image}
+                  source={{ uri: urlFor(category.image).url() }}
                 />
               </TouchableOpacity>
               <Text className={"text-sm " + textClass}>{category.name}</Text>

@@ -13,6 +13,7 @@ import * as Icon from "react-native-feather";
 
 import DishRow from "../components/DishRow";
 import CartIcon from "../components/CartIcon";
+import { urlFor } from "../sanity";
 
 const ResturantScreen = () => {
   const { params: item } = useRoute();
@@ -21,7 +22,7 @@ const ResturantScreen = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (item && item.id) {
+    if (item && item._id) {
       dispatch(setResturant({ ...item }));
     }
   }, [dispatch, item]);
@@ -32,7 +33,10 @@ const ResturantScreen = () => {
       <CartIcon />
       <ScrollView>
         <View className="relative">
-          <Image className="w-full h-72" source={item.image} />
+          <Image
+            className="w-full h-72"
+            source={{ uri: urlFor(item.image).url() }}
+          />
           <TouchableOpacity
             onPress={() => navigation.goBack()}
             className="absolute top-14 p-2 left-4 bg-gray-50/50 rounded-full shadow"
@@ -53,14 +57,17 @@ const ResturantScreen = () => {
                   <Text className="text-green-700 ">{item.stars}</Text>
                   <Text className="text-gray-700">
                     ({item.reviews} review) ·
-                    <Text className="font-semibold"> {item.category}</Text>
+                    <Text className="font-semibold"> {item?.type?.name}</Text>
                   </Text>
                 </Text>
               </View>
               <View className="flex-row items-center space-x-1">
                 <Icon.MapPin color="gray" width={15} height={15} />
                 <Text className="text-gray-700 text-xs">
-                  Nearby· {item.address}
+                  Nearby·{" "}
+                  {item.address.length > 20
+                    ? item.address.slice(0, 20) + "..."
+                    : item.address}
                 </Text>
               </View>
             </View>
